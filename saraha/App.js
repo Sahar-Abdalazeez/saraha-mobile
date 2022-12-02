@@ -6,7 +6,7 @@ const App = () => {
   return (
     <SafeAreaView style={{backgroundColor: '#10bbb3'}}>
       <StatusBar barStyle={'light-content'} />
-      <Register />
+      <Login />
     </SafeAreaView>
   );
 };
