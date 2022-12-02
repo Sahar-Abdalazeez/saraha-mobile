@@ -2,13 +2,13 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import { View, Text, StyleSheet } from 'react-native';
-import { Screen } from '../components/Screen';
+import { Screen } from '../components';
 export const Intro = () => {
     return (
         <Screen style={styles.screen}>
             <View style={styles.container}>
                 <FontAwesomeIcon icon={faEnvelope} size={100} color="#fff" />
-                <Text style={styles.title}>SARAHA</Text>
+                <Text style={styles.title}>SARAHAH</Text>
                 <Text style={styles.title}>صراحة</Text>
             </View>
         </Screen>

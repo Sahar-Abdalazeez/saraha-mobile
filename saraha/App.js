@@ -1,12 +1,12 @@
-import {Intro} from './src/screens';
+import {Intro, Login, Register} from './src/screens';
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 
 const App = () => {
   return (
     <SafeAreaView style={{backgroundColor: '#10bbb3'}}>
-      <StatusBar hidden={false} />
-      <Intro />
+      <StatusBar barStyle={'light-content'} />
+      <Register />
     </SafeAreaView>
   );
 };

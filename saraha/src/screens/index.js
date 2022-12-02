@@ -1,3 +1,4 @@
 import {Intro} from './Intro';
-
-export {Intro};
+import {Login} from './Login';
+import {Register} from './Register';
+export {Intro, Login, Register};
