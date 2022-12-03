@@ -1,13 +1,15 @@
 import {Intro, Login, Register} from './src/screens';
 import React from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+
+import AppNav from './src/navigation/AppNav';
 
 const App = () => {
   return (
-    <SafeAreaView style={{backgroundColor: '#10bbb3'}}>
-      <StatusBar barStyle={'light-content'} />
-      <Login />
-    </SafeAreaView>
+    <NavigationContainer>
+      <AppNav />
+    </NavigationContainer>
   );
 };
 
