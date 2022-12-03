@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
+import { Home } from '../screens';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons/faPaperPlane";
 import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
@@ -57,10 +58,12 @@ export const Users = ({ navigation }) => {
                                 <Text style={styles.email}>{user.email}</Text>
 
                             </View>
-                            <TouchableOpacity style={styles.send} >
-
+                            <TouchableOpacity style={styles.send} onPress={() => navigation.navigate('Home', {
+                                screen: 'SendMessage',
+                                // params: { user: 'jane' },
+                            })}
+                            >
                                 <FontAwesomeIcon size={20} icon={faPaperPlane} color="#10bbb3" />
-
                             </TouchableOpacity>
                         </View>
                     )

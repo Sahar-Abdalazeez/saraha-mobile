@@ -8,7 +8,7 @@ export const Screen = ({ children, style }) => {
             //to show the button above the keyboard
             behavior='padding'
             style={{ marginTop: 'auto', height: '100%' }}>
-            <SafeAreaView style={{ backgroundColor: '#10bbb3', flex: 1 }}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <StatusBar barStyle={'light-content'} />
 
                 <ScrollView

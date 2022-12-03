@@ -1,41 +1,86 @@
 import React, { useState } from "react";
 //icons
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
-import { faLock } from "@fortawesome/free-solid-svg-icons/faLock";
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons/faPaperPlane";
+import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
+import { faPerson } from "@fortawesome/free-solid-svg-icons/faPerson";
+import { faUsers } from "@fortawesome/free-solid-svg-icons/faUsers";
+
+import { createDrawerNavigator, DrawerToggleButton } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { Messages, SendMessage, Profile, Users } from '../screens';
 //components
-import { View, Text, StyleSheet } from "react-native";
-
-
-
-
-function NotificationsScreen({ navigation }) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>No New Notifications!</Text>
-            {/* <Button
-                onPress={() => navigation.goBack()}
-                title="Go back home"
-            /> */}
-        </View>
-    );
-}
-
-
+import { StyleSheet } from "react-native";
 
 const Drawer = createDrawerNavigator();
 
-export const Home = ({ navigation }) => {
+export const Home = () => {
 
     return (
         <NavigationContainer independent={true}>
-            <Drawer.Navigator >
-                {/* <Drawer.Screen name="Home" component={HomeScreen} /> */}
-                <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+            <Drawer.Navigator
+
+                screenOptions={{
+                    headerTitleStyle: { color: '#fff', fontSize: 22 },
+                    headerStyle: { backgroundColor: '#10bbb3' },
+                    headerLeft: () => <FontAwesomeIcon icon={faBars} color="#fff" style={{ marginLeft: 20 }} size={25} />,
+                }}
+            >
+                <Drawer.Screen name="Messages" component={Messages} options={{
+                    title: "Messages",
+                    drawerIcon: () => (
+                        <FontAwesomeIcon
+                            icon={
+                                faEnvelope
+                            }
+                            size={30}
+                            color={'#10bbb3'}
+                        />
+                    ),
+                }} />
+
+                <Drawer.Screen name="SendMessage" component={SendMessage} options={{
+                    title: "SendMessage",
+                    drawerIcon: () => (
+                        <FontAwesomeIcon
+                            icon={
+                                faPaperPlane
+                            }
+                            size={20}
+                            color={'#10bbb3'}
+                        />
+                    ),
+                }} />
+
+                <Drawer.Screen name="Profile" component={Profile} options={{
+                    title: "Profile",
+                    drawerIcon: () => (
+                        <FontAwesomeIcon
+                            icon={
+                                faPerson
+                            }
+                            size={30}
+                            color={'#10bbb3'}
+                        />
+                    ),
+                }} />
+
+                <Drawer.Screen name="Users" component={Users} options={{
+                    title: "Users",
+                    drawerIcon: () => (
+                        <FontAwesomeIcon
+                            icon={
+                                faUsers
+                            }
+                            size={30}
+                            color={'#10bbb3'}
+                        />
+                    ),
+                }} />
             </Drawer.Navigator>
-        </NavigationContainer>
+        </NavigationContainer >
     )
 };
 
