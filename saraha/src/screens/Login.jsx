@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 /**
  * Login
  */
-export const Login = () => {
+export const Login = ({ navigation }) => {
     //handle login 
     const handleLogin = async () => {
         try {
@@ -25,7 +25,7 @@ export const Login = () => {
     return (
 
         <Screen style={styles.screen}>
-            <NavigationButton text='Register' />
+            <NavigationButton text='Register' onPress={() => navigation.navigate('Register')} />
 
             <View style={styles.container}>
                 <Logo style={{ alignSelf: 'center' }} />

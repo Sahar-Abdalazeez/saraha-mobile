@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, ScrollView, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, ScrollView, StyleSheet, KeyboardAvoidingView, SafeAreaView, StatusBar } from 'react-native';
 
 export const Screen = ({ children, style }) => {
     return (
@@ -8,15 +8,20 @@ export const Screen = ({ children, style }) => {
             //to show the button above the keyboard
             behavior='padding'
             style={{ marginTop: 'auto', height: '100%' }}>
-            <ScrollView
-                //fix the issue of pressing button twice 
-                keyboardShouldPersistTaps='always'
-                contentContainerStyle={{ flexGrow: 1 }}>
-                <View style={[styles.container, style]} >
-                    {children}
-                </View>
-            </ScrollView>
+            <SafeAreaView style={{ backgroundColor: '#10bbb3', flex: 1 }}>
+                <StatusBar barStyle={'light-content'} />
+
+                <ScrollView
+                    //fix the issue of pressing button twice 
+                    keyboardShouldPersistTaps='always'
+                    contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={[styles.container, style]} >
+                        {children}
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
         </KeyboardAvoidingView>
+
     )
 }
 

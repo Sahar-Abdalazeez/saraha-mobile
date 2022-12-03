@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 /**
  *  Register
  */
-export const Register = () => {
+export const Register = ({ navigation }) => {
     const [user, setUser] = useState({});
     console.log('user', user);
     // handle register
@@ -30,7 +30,7 @@ export const Register = () => {
     return (
 
         <Screen style={styles.screen}>
-            <NavigationButton text='Login' />
+            <NavigationButton text='Login' onPress={() => navigation.navigate('Login')} />
 
             <View style={styles.container}>
                 <Logo style={{ alignSelf: 'center' }} />
