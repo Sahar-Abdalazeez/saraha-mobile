@@ -1,11 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Intro, Login, Register } from '../screens';
+import { Intro, Login, Register, Home } from '../screens';
 
 const AppNav = () => {
     const Stack = createNativeStackNavigator();
     return (
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Intro">
             <Stack.Screen
                 name="Intro"
                 component={Intro}
@@ -25,6 +25,11 @@ const AppNav = () => {
                 options={{
                     headerShown: false,
                 }}
+            />
+            <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{ headerShown: false }}
             />
         </Stack.Navigator>
     );

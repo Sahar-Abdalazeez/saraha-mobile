@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         overflow: 'hidden',
         paddingRight: 30,
-        marginBottom: 20,
+        marginBottom: 3,
 
     },
     input: {
