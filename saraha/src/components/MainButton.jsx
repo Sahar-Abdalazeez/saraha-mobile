@@ -1,10 +1,12 @@
-import { TouchableOpacity, StyleSheet, Text } from "react-native"
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native"
 
-export const MainButton = ({ text, onPress }) => {
+export const MainButton = ({ text, onPress, style }) => {
     return (
-        <TouchableOpacity onPress={() => onPress()} style={styles.button}>
-            <Text style={styles.buttonText} >{text}</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={() => onPress()} style={[style, styles.button]}>
+                <Text style={styles.buttonText} >{text}</Text>
+            </TouchableOpacity>
+        </View>
     )
 }
 
@@ -24,5 +26,9 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         backgroundColor: '#fff',
         margin: 20
+    },
+    buttonContainer: {
+        marginTop: 'auto',
+        paddingBottom: 20,
     }
 })
