@@ -9,9 +9,14 @@ import { Screen } from '../components';
 /**
  * Intro
  */
-export const Intro = () => {
+export const Intro = ({ navigation }) => {
+    //automatically go to login screen 
+    setTimeout(() => {
+        navigation.navigate('Login')
+    }, 5000);
+
     return (
-        <Screen style={styles.screen}>
+        <Screen style={styles.screen} safeAreaColor='#10bbb3'>
             <View style={styles.container}>
                 <FontAwesomeIcon icon={faEnvelope} size={100} color="#fff" />
                 <Text style={styles.title}>SARAHAH</Text>

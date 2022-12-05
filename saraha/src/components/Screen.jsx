@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { View, ScrollView, StyleSheet, KeyboardAvoidingView, SafeAreaView, StatusBar } from 'react-native';
+import { View, ScrollView, StyleSheet, KeyboardAvoidingView, SafeAreaView, StatusBar, Platform } from 'react-native';
 
-export const Screen = ({ children, style }) => {
+export const Screen = ({ children, style, safeAreaColor }) => {
+    const platform = Platform.OS;
     return (
         <KeyboardAvoidingView
             //to show the button above the keyboard
-            behavior='padding'
+            behavior={platform === 'android' ? 'height' : 'padding'}
             style={{ marginTop: 'auto', height: '100%' }}>
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: `${safeAreaColor}` }}>
                 <StatusBar barStyle={'light-content'} />
 
                 <ScrollView
