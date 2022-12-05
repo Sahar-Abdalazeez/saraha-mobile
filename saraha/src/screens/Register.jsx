@@ -3,26 +3,34 @@ import React, { useState } from "react";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
 import { faPerson } from "@fortawesome/free-solid-svg-icons/faPerson";
 import { faLock } from "@fortawesome/free-solid-svg-icons/faLock";
+//animation 
+import Success from "../assets/animations/registeredSuccess.json";
 //components
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import {
     Screen,
     Input,
     Logo,
     MainButton,
     NavigationButton,
+    Modal,
 } from "../components";
-//storage
-import AsyncStorage from "@react-native-async-storage/async-storage";
-//api function
-import { register } from "../queries/user.query";
+//axios
+import axios from "axios";
 
 /**
  *  Register
  */
+const platform = Platform.OS;
+//api url 
+const url =
+    platform === "android"
+        ? "http://10.0.2.2:3000/api/v1/auth/signup"
+        : "http://localhost:3000/api/v1/auth/signup";
+
 export const Register = ({ navigation }) => {
-    const [registered, setRegistered] = useState(false);
-    const [message, setMessage] = useState(false);
+    //state for showing the modal 
+    const [showModal, setShowModal] = useState(true);
 
     const [user, setUser] = useState({
         userName: "",
@@ -36,6 +44,19 @@ export const Register = ({ navigation }) => {
         password: "",
         cpassword: "",
     });
+    //check if all fields have value 
+    const allFieldsFilled = !!(
+        user?.userName?.length &&
+        user?.email?.length &&
+        user?.password?.length &&
+        user?.cpassword?.length
+    );
+    // check if all fields have valid value 
+    const fieldsValid =
+        !error.userName?.length &&
+        !error.email?.length &&
+        !error.password?.length &&
+        !error.cpassword?.length;
 
     //validate error
     const fieldValidation = async () => {
@@ -50,10 +71,13 @@ export const Register = ({ navigation }) => {
                 ...prevError,
                 email: "please enter your email",
             }));
-        } else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email) == false) {
+        }
+        if (
+            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email) == false
+        ) {
             setError((prevError) => ({
                 ...prevError,
-                email: 'please enter valid email '
+                email: "please enter valid email ",
             }));
         }
 
@@ -68,33 +92,34 @@ export const Register = ({ navigation }) => {
                 ...prevError,
                 cpassword: "please confirm your password",
             }));
-        } else if (user.password !== user.cpassword) {
+        }
+        if (
+            user.password !== user.cpassword &&
+            password.length &&
+            cpassword.length
+        ) {
             setError((prevError) => ({
                 ...prevError,
                 cpassword: "passwrod and confirm passwrod don't match",
             }));
         }
+        //if all fields are filled and no invalid values call the api when the butto is pressed 
+        if (allFieldsFilled && fieldsValid) {
 
-        else {
-            try {
-                // await AsyncStorage.setItem("user", JSON.stringify(value));
-                const result = register(user);
-                if (result.message === "done") {
-                    setRegistered(true);
-                }
-                else {
-                    setRegistered(true);
-                    setMessage(result.message);
-                }
+            let { data } = await axios.post(url, user);
+            console.log("data", data);
 
-            } catch (error) {
-                console.log(error);
+            if (data.message === "done") {
+                setShowModal(true);
+            } else {
+                setShowModal(false);
+                alert(data?.message);
             }
         }
     };
 
     return (
-        <Screen style={styles.screen}>
+        <Screen style={styles.screen} safeAreaColor='#fff'>
             <NavigationButton
                 text="Login"
                 onPress={() => navigation.navigate("Login")}
@@ -115,7 +140,10 @@ export const Register = ({ navigation }) => {
                 <Text style={styles.error}>{error.userName}</Text>
                 <Input
                     onChange={(email) => {
-                        setUser((prevState) => ({ ...prevState, email: email.toLowerCase() }));
+                        setUser((prevState) => ({
+                            ...prevState,
+                            email: email.toLowerCase(),
+                        }));
                         setError((prevError) => ({ ...prevError, email: "" }));
                     }}
                     icon={faEnvelope}
@@ -144,14 +172,23 @@ export const Register = ({ navigation }) => {
             </View>
 
             <MainButton text="Register" onPress={() => fieldValidation()} />
+
+            {showModal ? (
+                <Modal
+                    subTitle={"Registered Successfully"}
+                    title={"Congratulations"}
+                    animation={Success}
+                    onHide={() => setShowModal(false)}
+                    onContinuePressed={() => navigation.navigate('Users')}
+                />
+            ) : null}
         </Screen>
     );
 };
 
 const styles = StyleSheet.create({
     screen: {
-        paddingTop: 30,
-        padding: 0,
+
     },
     container: {
         disply: "flex",
@@ -164,13 +201,13 @@ const styles = StyleSheet.create({
         fontSize: 50,
         color: "#fff",
         fontWeight: "700",
-        marginBottom: 30,
+        marginBottom: 10,
         textAlign: "center",
     },
     error: {
         fontSize: 14,
         color: "red",
-        marginBottom: 20,
+        marginBottom: 8,
         marginLeft: 15,
     },
 });
