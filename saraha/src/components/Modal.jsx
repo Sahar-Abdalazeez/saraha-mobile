@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import LottieView from 'lottie-react-native';
 
 import { faX } from "@fortawesome/free-solid-svg-icons/faX";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons/faCheckCircle";
-
 import { Text, StyleSheet, View, TextInput, SafeAreaView, Button, TouchableOpacity } from 'react-native';
 import { Header, IconButton, MainButton } from '../components';
 

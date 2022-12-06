@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Intro, Login, Register, Home, Users, SendMessage } from '../screens';
+import { Intro, Login, Register, Home, Users, SendMessage, RecievedMessages } from '../screens';
 
 const AppNav = () => {
     const Stack = createNativeStackNavigator();
@@ -9,7 +9,7 @@ const AppNav = () => {
             <Stack.Screen
                 name="Intro"
                 component={Intro}
-                options={{ headerShown: false }}
+                options={{ headerShown: false, }}
             />
 
             <Stack.Screen
@@ -24,21 +24,28 @@ const AppNav = () => {
                 component={Register}
                 options={{
                     headerShown: false,
+                    navigationBarColor: 'black'
                 }}
             />
             <Stack.Screen
-                name="Home"
-                component={Home}
+                name="RecievedMessages"
+                component={RecievedMessages}
                 options={{ headerShown: false }}
             />
+
             <Stack.Screen
                 name="Users"
                 component={Users}
-                options={{ headerShown: false }}
+                options={{ headerShown: false, }}
             />
             <Stack.Screen
                 name="SendMessage"
                 component={SendMessage}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Home"
+                component={Home}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

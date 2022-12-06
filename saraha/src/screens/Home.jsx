@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 //icons
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
@@ -7,86 +7,50 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons/faPaperPlane";
 import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
 import { faPerson } from "@fortawesome/free-solid-svg-icons/faPerson";
 import { faUsers } from "@fortawesome/free-solid-svg-icons/faUsers";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { createDrawerNavigator, DrawerToggleButton } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { Messages, SendMessage, Profile, Users } from '../screens';
 //components
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
-const Drawer = createDrawerNavigator();
 
-export const Home = () => {
+export const Home = ({ navigation }) => {
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        handleCheck();
+    }, [])
+
+    const handleCheck = async () => {
+        try {
+            const result = await AsyncStorage.getItem('loginToken')
+            const token = JSON.parse(result)
+            setUser(token);
+        }
+        catch (error) {
+            console.log('error', error)
+        }
+    }
 
     return (
-        <NavigationContainer independent={true}>
-            <Drawer.Navigator
 
-                screenOptions={{
-                    headerTitleStyle: { color: '#fff', fontSize: 22 },
-                    headerStyle: { backgroundColor: '#10bbb3' },
-                    headerLeft: () => <FontAwesomeIcon icon={faBars} color="#fff" style={{ marginLeft: 20 }} size={25} />,
-                }}
-            >
-                <Drawer.Screen name="Messages" component={Messages} options={{
-                    title: "Messages",
-                    drawerIcon: () => (
-                        <FontAwesomeIcon
-                            icon={
-                                faEnvelope
-                            }
-                            size={30}
-                            color={'#10bbb3'}
-                        />
-                    ),
-                }} />
+        <View style={styles.screen}>
+            <TouchableOpacity onPress={() => navigation.navigate('Users')}>
+                <Text>Users  </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('RecievedMessages', {
 
-                <Drawer.Screen name="SendMessage" component={SendMessage} options={{
-                    title: "SendMessage",
-                    drawerIcon: () => (
-                        <FontAwesomeIcon
-                            icon={
-                                faPaperPlane
-                            }
-                            size={20}
-                            color={'#10bbb3'}
-                        />
-                    ),
-                }} />
+                userToken: user,
+            })}>
+                <Text>Messages  </Text>
+            </TouchableOpacity>
 
-                <Drawer.Screen name="Profile" component={Profile} options={{
-                    title: "Profile",
-                    drawerIcon: () => (
-                        <FontAwesomeIcon
-                            icon={
-                                faPerson
-                            }
-                            size={30}
-                            color={'#10bbb3'}
-                        />
-                    ),
-                }} />
-
-                <Drawer.Screen name="Users" component={Users} options={{
-                    title: "Users",
-                    drawerIcon: () => (
-                        <FontAwesomeIcon
-                            icon={
-                                faUsers
-                            }
-                            size={30}
-                            color={'#10bbb3'}
-                        />
-                    ),
-                }} />
-            </Drawer.Navigator>
-        </NavigationContainer >
+        </View>
     )
 };
 
 const styles = StyleSheet.create({
     screen: {
-        paddingTop: 30,
+        paddingTop: 200,
         padding: 0,
         backgroundColor: '#fff'
     },
