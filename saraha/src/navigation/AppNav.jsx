@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Intro, Login, Register, Home, Users, SendMessage, RecievedMessages } from '../screens';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AppNav = () => {
+    const [userToken, setUserToken] = useState();
+
+    const checkIfUserLoggedBefore = async () => {
+        try {
+            const result = await AsyncStorage.getItem('loginToken')
+            const token = JSON.parse(result);
+            setUserToken(token);
+        }
+        catch (error) {
+            console.log('error', error)
+        }
+    }
+
+
+    useEffect(() => {
+        checkIfUserLoggedBefore()
+    }, [])
+
+    const introScreen = userToken?.length ? 'Intro' : 'Home';
     const Stack = createNativeStackNavigator();
     return (
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName={introScreen}>
             <Stack.Screen
                 name="Intro"
                 component={Intro}
