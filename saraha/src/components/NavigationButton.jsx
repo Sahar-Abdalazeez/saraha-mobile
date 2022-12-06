@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         alignSelf: 'baseline',
         overflow: 'hidden',
         padding: 8,
+        marginTop: 40
     },
     buttonText: {
         color: '#10bbb3',

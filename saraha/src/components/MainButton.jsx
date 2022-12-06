@@ -1,4 +1,4 @@
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native"
+import { TouchableOpacity, StyleSheet, Text, View, Platform } from "react-native"
 
 export const MainButton = ({ text, onPress, style }) => {
     return (
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 'auto',
-        paddingBottom: 20,
+        paddingBottom: `${Platform.OS === 'android' ? '12%' : '0%'}`
+
     }
 })

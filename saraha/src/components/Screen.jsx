@@ -7,11 +7,10 @@ export const Screen = ({ children, style, safeAreaColor }) => {
     return (
         <KeyboardAvoidingView
             //to show the button above the keyboard
-            behavior={platform === 'android' ? 'height' : 'padding'}
+            behavior={'padding'}
             style={{ marginTop: 'auto', height: '100%' }}>
             <SafeAreaView style={{ flex: 1, backgroundColor: `${safeAreaColor}` }}>
-                <StatusBar barStyle={'light-content'} />
-
+                <StatusBar barStyle={'dark-content'} />
                 <ScrollView
                     //fix the issue of pressing button twice 
                     keyboardShouldPersistTaps='always'
@@ -29,13 +28,11 @@ export const Screen = ({ children, style, safeAreaColor }) => {
 
 const styles = StyleSheet.create({
     container: {
-
         display: 'flex',
         flex: 1,
         width: '100%',
         height: '100%',
         backgroundColor: '#10bbb3',
-        padding: 20,
     }
 })
 
