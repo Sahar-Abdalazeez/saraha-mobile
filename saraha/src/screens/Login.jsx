@@ -2,25 +2,31 @@ import React, { useState } from "react";
 //icons
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
 import { faLock } from "@fortawesome/free-solid-svg-icons/faLock";
+import Success from "../assets/animations/registeredSuccess.json";
 
 //components
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import {
     Screen,
     Input,
     Logo,
     MainButton,
     NavigationButton,
+    Modal
 } from "../components";
 //storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
 //api 
 import axios from "axios";
-const baseUrl = "http://localhost:3000/api/v1";
 /**
  * Login
  */
+const platform = Platform.OS;
 
+const url =
+    platform === "android"
+        ? "http://10.0.2.2:3000/api/v1/auth/signin"
+        : "http://localhost:3000/api/v1/auth/signin";
 export const Login = ({ navigation }) => {
     const [loggedin, setLoggedin] = useState(false);
 
@@ -34,17 +40,18 @@ export const Login = ({ navigation }) => {
     });
 
     // login existing user
-    const login = async (user) => {
-        const url = `${baseUrl}/auth/signin`;
-        const { data } = await axios.post(url, user);
+    const login = async () => {
+        let { data } = await axios.post(url, user);
+        console.log("data", data);
 
         if (data.message === "login") {
             setLoggedin(true);
             await AsyncStorage.setItem("loginToken", JSON.stringify(data.loginToken));
-            navigation.navigate("Home");
+            navigation.navigate("Users");
         }
         else {
-            setError({ email: 'wrong email or password', password: 'wrong email or password' })
+            setError({ email: 'wrong email or password', password: 'wrong email or password' });
+            alert(data.message || data.messge)
         }
     };
 
@@ -108,14 +115,22 @@ export const Login = ({ navigation }) => {
                 <Text style={styles.error}>{error.password}</Text>
             </View>
             <MainButton onPress={() => handleLogin()} text="Login" />
+            {loggedin ? (
+                <Modal
+                    title={"Logged in Successfully"}
+                    animation={Success}
+                    onHide={() => setLoggedin(false)}
+                    onContinuePressed={() => navigation.navigate('Users')}
+                />
+            ) : null}
         </Screen>
     );
 };
 
 const styles = StyleSheet.create({
     screen: {
-        paddingTop: 30,
-        padding: 0,
+        flex: 1,
+        height: '100%'
     },
     container: {
         disply: "flex",
