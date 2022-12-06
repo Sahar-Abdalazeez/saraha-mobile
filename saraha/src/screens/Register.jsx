@@ -30,7 +30,7 @@ const url =
 
 export const Register = ({ navigation }) => {
     //state for showing the modal 
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     const [user, setUser] = useState({
         userName: "",
